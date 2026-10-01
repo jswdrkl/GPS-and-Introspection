@@ -1,389 +1,367 @@
 <!DOCTYPE html>
-<html lang="mr" class="light">
+<html lang="mr" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>जीपीएस आणि आत्मनिरीक्षण</title>
   
-  <!-- IBM Plex Sans & IBM Plex Sans Devanagari Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Devanagari:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"IBM Plex Sans Devanagari"', '"IBM Plex Sans"', 'sans-serif'],
-          },
-          colors: {
-            surface: {
-              light: '#f8fafc',
-              dark: '#0f172a'
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <!-- IBM Plex Sans / IBM Plex Sans Devanagari font family -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Devanagari:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
+    :root {
+      --bg-color: #f7f9fc;
+      --card-bg: #ffffff;
+      --text-color: #24292f;
+      --subtle-text: #57606a;
+      --border-color: #e1e4e8;
+      --accent-color: #3b82f6;
+      --button-bg: #edf2f7;
+      --button-hover: #e2e8f0;
+      --button-text: #1a202c;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #f1f5f9;
+      --subtle-text: #94a3b8;
+      --border-color: #334155;
+      --accent-color: #60a5fa;
+      --button-bg: #334155;
+      --button-hover: #475569;
+      --button-text: #f8fafc;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: "IBM Plex Sans Devanagari", "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-      word-break: keep-all;
-      overflow-wrap: normal;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      word-break: normal;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
       hyphens: none;
+      -webkit-hyphens: none;
     }
 
-    .article-text {
+    .container {
+      width: 100%;
+      max-width: 780px;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 32px 36px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .top-controls {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .btn:hover {
+      background-color: var(--button-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .svg-banner {
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+      margin: 0 auto 32px auto;
+      display: block;
+    }
+
+    .title {
+      font-size: 1.85rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--accent-color);
+      letter-spacing: -0.02em;
+    }
+
+    .content-body p {
+      font-size: 1.12rem;
+      line-height: 1.85;
       text-align: justify;
-      text-justify: inter-word;
-      word-break: keep-all;
-      overflow-wrap: normal;
-      line-height: 1.95;
+      margin-bottom: 22px;
+      color: var(--text-color);
     }
 
-    /* Keyframe Animations for SVG Illustration */
-    @keyframes orbit-rotate-1 {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes orbit-rotate-2 {
-      0% { transform: rotate(180deg); }
-      100% { transform: rotate(540deg); }
-    }
-    @keyframes orbit-rotate-3 {
-      0% { transform: rotate(60deg); }
-      100% { transform: rotate(420deg); }
-    }
-    @keyframes pulse-wave {
-      0% { r: 18px; opacity: 0.9; stroke-width: 2px; }
-      50% { r: 42px; opacity: 0.45; stroke-width: 1.5px; }
-      100% { r: 68px; opacity: 0; stroke-width: 1px; }
-    }
-    @keyframes beacon-glow {
-      0%, 100% { transform: scale(1); opacity: 0.85; filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.7)); }
-      50% { transform: scale(1.18); opacity: 1; filter: drop-shadow(0 0 16px rgba(99, 102, 241, 0.9)); }
-    }
-    @keyframes float-eye {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-4px); }
-    }
-    @keyframes signal-dash {
-      to { stroke-dashoffset: -40; }
+    .centered-marker {
+      text-align: center !important;
+      font-size: 1.4rem;
+      letter-spacing: 0.25em;
+      margin: 30px 0 !important;
+      user-select: none;
     }
 
-    .anim-orbit-1 {
-      transform-origin: 200px 140px;
-      animation: orbit-rotate-1 22s linear infinite;
+    .closing-note {
+      text-align: center !important;
+      font-size: 1.05rem;
+      color: var(--subtle-text);
+      margin-top: 28px;
+      margin-bottom: 12px !important;
+      font-weight: 500;
     }
-    .anim-orbit-2 {
-      transform-origin: 200px 140px;
-      animation: orbit-rotate-2 28s linear infinite;
-    }
-    .anim-orbit-3 {
-      transform-origin: 200px 140px;
-      animation: orbit-rotate-3 34s linear infinite reverse;
-    }
-    .anim-wave-1 {
-      animation: pulse-wave 3.2s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
-    }
-    .anim-wave-2 {
-      animation: pulse-wave 3.2s cubic-bezier(0.2, 0.6, 0.4, 1) infinite 1.1s;
-    }
-    .anim-wave-3 {
-      animation: pulse-wave 3.2s cubic-bezier(0.2, 0.6, 0.4, 1) infinite 2.2s;
-    }
-    .anim-beacon {
-      transform-origin: 200px 140px;
-      animation: beacon-glow 3.5s ease-in-out infinite;
-    }
-    .anim-centerpiece {
-      animation: float-eye 4.5s ease-in-out infinite;
-      transform-origin: 200px 140px;
-    }
-    .anim-signal-line {
-      stroke-dasharray: 4, 4;
-      animation: signal-dash 1.8s linear infinite;
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px 8px;
+      }
+      .container {
+        padding: 24px 18px;
+      }
+      .title {
+        font-size: 1.5rem;
+      }
+      .content-body p {
+        font-size: 1.02rem;
+        line-height: 1.75;
+      }
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 min-h-screen transition-colors duration-300 antialiased selection:bg-sky-200 dark:selection:bg-sky-900">
+<body>
 
-  <!-- Top Action Bar -->
-  <header class="sticky top-0 z-30 backdrop-blur-md bg-slate-50/85 dark:bg-slate-950/85 border-b border-slate-200/60 dark:border-slate-800/80 transition-colors duration-300">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-end gap-2.5">
+  <main class="container">
+    <div class="top-controls">
+      <button id="themeToggle" class="btn" aria-label="Toggle theme">
+        <svg id="themeIcon" viewBox="0 0 24 24">
+          <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>
+        </svg>
+        <span id="themeLabel">Dark Mode</span>
+      </button>
+
+      <button id="shareBtn" class="btn" aria-label="Share">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+        </svg>
+        <span>Share</span>
+      </button>
+    </div>
+
+    <!-- Animated Light Colorful SVG Graphic for "जीपीएस आणि आत्मनिरीक्षण" -->
+    <svg class="svg-banner" viewBox="0 0 540 220" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Earth Gradient -->
+        <linearGradient id="earthGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#38bdf8"/>
+          <stop offset="60%" stop-color="#3b82f6"/>
+          <stop offset="100%" stop-color="#1d4ed8"/>
+        </linearGradient>
+
+        <!-- Orbit Ring Gradient -->
+        <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#fb7185" stop-opacity="0.8"/>
+          <stop offset="50%" stop-color="#a855f7" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.8"/>
+        </linearGradient>
+
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+      </defs>
+
+      <style>
+        .radar-pulse {
+          animation: pulse 3s ease-out infinite;
+          transform-origin: 270px 110px;
+        }
+        .radar-pulse-2 {
+          animation: pulse 3s ease-out 1.5s infinite;
+          transform-origin: 270px 110px;
+        }
+        .orbit-rotation {
+          animation: spin 16s linear infinite;
+          transform-origin: 270px 110px;
+        }
+        .orbit-reverse {
+          animation: spin-back 22s linear infinite;
+          transform-origin: 270px 110px;
+        }
+        .signal-ray {
+          stroke-dasharray: 4, 4;
+          animation: dash 1.5s linear infinite;
+        }
+        @keyframes pulse {
+          0% { r: 24px; opacity: 0.9; }
+          100% { r: 90px; opacity: 0; }
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        @keyframes spin-back {
+          0% { transform: rotate(360deg); }
+          100% { transform: rotate(0deg); }
+        }
+        @keyframes dash {
+          to { stroke-dashoffset: -16; }
+        }
+      </style>
+
+      <!-- Range / Waves representing introspection & radar -->
+      <circle class="radar-pulse" cx="270" cy="110" r="24" fill="none" stroke="#60a5fa" stroke-width="2" opacity="0.6"/>
+      <circle class="radar-pulse-2" cx="270" cy="110" r="24" fill="none" stroke="#f472b6" stroke-width="1.8" opacity="0.6"/>
+
+      <!-- Orbit Path 1 -->
+      <ellipse cx="270" cy="110" rx="180" ry="60" fill="none" stroke="url(#orbitGrad)" stroke-width="1.8" stroke-dasharray="6,4" opacity="0.75" transform="rotate(-15 270 110)" />
       
-      <!-- Share Button -->
-      <button 
-        id="shareBtn" 
-        type="button" 
-        aria-label="Share article"
-        class="inline-flex items-center justify-center p-2.5 rounded-full text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500 active:scale-95"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-        </svg>
-      </button>
+      <!-- Orbit Path 2 -->
+      <ellipse cx="270" cy="110" rx="180" ry="60" fill="none" stroke="url(#orbitGrad)" stroke-width="1.8" stroke-dasharray="6,4" opacity="0.75" transform="rotate(25 270 110)" />
 
-      <!-- Theme Toggle Button -->
-      <button 
-        id="themeToggleBtn" 
-        type="button" 
-        aria-label="Toggle theme"
-        class="inline-flex items-center justify-center p-2.5 rounded-full text-slate-600 dark:text-slate-300 hover:text-amber-500 dark:hover:text-yellow-400 bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-sky-500 active:scale-95"
-      >
-        <!-- Sun icon (shown in dark mode) -->
-        <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-        <!-- Moon icon (shown in light mode) -->
-        <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
-      </button>
+      <!-- Center Earth / Mind -->
+      <circle cx="270" cy="110" r="28" fill="url(#earthGrad)" filter="url(#glow)"/>
+      <circle cx="270" cy="110" r="28" fill="none" stroke="#e0f2fe" stroke-width="2"/>
+      
+      <!-- Eye / Mind Observation Icon on Earth -->
+      <path d="M 258 110 Q 270 100 282 110 Q 270 120 258 110 Z" fill="none" stroke="#ffffff" stroke-width="1.6"/>
+      <circle cx="270" cy="110" r="3.2" fill="#ffffff"/>
 
+      <!-- Rotating group 1 for Satellites -->
+      <g class="orbit-rotation">
+        <!-- Satellite 1 -->
+        <g transform="translate(100, 110)">
+          <rect x="-8" y="-5" width="16" height="10" rx="2" fill="#38bdf8"/>
+          <line x1="-15" y1="0" x2="-8" y2="0" stroke="#f59e0b" stroke-width="2"/>
+          <line x1="8" y1="0" x2="15" y2="0" stroke="#f59e0b" stroke-width="2"/>
+          <circle cx="0" cy="0" r="2" fill="#ffffff"/>
+        </g>
+        <!-- Satellite 2 -->
+        <g transform="translate(440, 110)">
+          <rect x="-8" y="-5" width="16" height="10" rx="2" fill="#ec4899"/>
+          <line x1="-15" y1="0" x2="-8" y2="0" stroke="#06b6d4" stroke-width="2"/>
+          <line x1="8" y1="0" x2="15" y2="0" stroke="#06b6d4" stroke-width="2"/>
+          <circle cx="0" cy="0" r="2" fill="#ffffff"/>
+        </g>
+      </g>
+
+      <!-- Rotating group 2 (reverse) -->
+      <g class="orbit-reverse">
+        <!-- Satellite 3 -->
+        <g transform="translate(270, 40)">
+          <rect x="-7" y="-5" width="14" height="10" rx="2" fill="#10b981"/>
+          <line x1="-13" y1="0" x2="-7" y2="0" stroke="#f97316" stroke-width="2"/>
+          <line x1="7" y1="0" x2="13" y2="0" stroke="#f97316" stroke-width="2"/>
+          <circle cx="0" cy="0" r="2" fill="#ffffff"/>
+        </g>
+        <!-- Satellite 4 -->
+        <g transform="translate(270, 180)">
+          <rect x="-7" y="-5" width="14" height="10" rx="2" fill="#f59e0b"/>
+          <line x1="-13" y1="0" x2="-7" y2="0" stroke="#8b5cf6" stroke-width="2"/>
+          <line x1="7" y1="0" x2="13" y2="0" stroke="#8b5cf6" stroke-width="2"/>
+          <circle cx="0" cy="0" r="2" fill="#ffffff"/>
+        </g>
+      </g>
+
+      <!-- Converging Signal Beams to Center -->
+      <line x1="100" y1="110" x2="270" y2="110" stroke="#38bdf8" stroke-width="1.2" opacity="0.4" class="signal-ray"/>
+      <line x1="440" y1="110" x2="270" y2="110" stroke="#ec4899" stroke-width="1.2" opacity="0.4" class="signal-ray"/>
+      <line x1="270" y1="40" x2="270" y2="110" stroke="#10b981" stroke-width="1.2" opacity="0.4" class="signal-ray"/>
+      <line x1="270" y1="180" x2="270" y2="110" stroke="#f59e0b" stroke-width="1.2" opacity="0.4" class="signal-ray"/>
+    </svg>
+
+    <h1 class="title">जीपीएस आणि आत्मनिरीक्षण</h1>
+
+    <div class="content-body">
+      <p>आधुनिक जीवनात आपल्या सगळ्यांचा जीपीएस सुविधा आणि इतर उपग्रहीय दळणवळण (satellite communication) यांच्याशी नित्य संबंध येत असतो. पृथ्वीच्या कक्षेत कम्युनिकेशन सॅटलाइट्स नसतील तर टीव्ही लावून करायचे काय हा प्रश्न सर्वांनाच पडेल आणि नवीन पिढीला ‘लोकेशन’ आणि ‘जीपीएस’ नसेल तर अगदी शेजारच्या गल्लीतल्या घरापर्यंत ‘नॅव्हिगेट’ करणे देखील जमणार नाही अशी स्थिती आहे. पत्ता लिहिलेला कागद दाखवत विचारलेला “दादा/ताई, जरा हा पत्ता सांगता का?” हा प्रश्न जवळजवळ इतिहासजमा झाला आहे. असो.</p>
+
+      <p>कृत्रिम उपग्रह, त्यांच्या कक्षा आणि उपयोग विविध असले तरी तूर्तास आपण एका अर्थी ‘रोजच्या वापरातील’ उपग्रहांचा विचार करूया. भूस्थिर कक्षेतील (Geosynchronous orbit) उपग्रह जे मुख्यत्वे सॅटेलाईट टीव्ही, विविध प्रकारचे दळणवळण आणि हवामानाचे अंदाज वर्तविण्यासाठी वापरले जातात आणि मध्यम कक्षेत फिरणारे (medium earth orbit) उपग्रह जे जीपीएस सुविधेसाठी वापरले जातात.</p>
+
+      <p>भूस्थिर उपग्रह विषुववृत्तापासून अंदाजे ३६००० किलोमीटर उंचीवर असलेल्या कक्षेत स्थापित केले जातात आणि त्यांचा पृथ्वीभोवती फिरण्याचा वेग अशा प्रकारे नियंत्रित केलेला असतो जेणेकरून ते पृथ्वीवर असलेल्या ‘ग्राउंड स्टेशन’ साठी ध्रुव ताऱ्याप्रमाणे आकाशात कायम एकाच जागी असल्याचे भासतात. त्यामुळे या उपग्रहाबरोबर संपर्क साधण्यासाठी म्हणून ‘ग्राउंड स्टेशन’ची अॅंटेना एकदा का फिक्स केली की काम फत्ते. थोडक्यात काय तर भूस्थिर उपग्रह आणि त्याची ग्राउंड स्टेशन्स एकमेकांकडे कायम ‘एकाच दृष्टिकोनातून’ पाहतात.</p>
+
+      <p>जीपीएस पद्धत यापेक्षा वेगळी आहे. Medium Earth Orbit मधे आपापल्या कक्षेत फिरणाऱ्या ३० पेक्षा जास्त उपग्रहांच्या एकत्रित प्रणालीचा (satellite constellation) यात वापर होतो. ढोबळ मानाने सांगायचे तर या constellation मधील प्रत्येक उपग्रह त्याची त्याच्या कक्षेतील स्थितीची तांत्रिक माहिती देणारा रेडियो संदेश सतत ट्रान्समिट करत असतो. आपल्या हातातील स्मार्टफोन, ‘स्मार्ट’ रिष्टवाच आणि इतर उपकरणात असलेला ‘जीपीएस रीसीव्हर’ अशा किमान चार उपग्रहांकडून मिळालेल्या संदेशांचे विश्लेषण करून भूतलावरची आपली नेमकी जागा (आणि वेळ देखील) अचूकपणे दाखवतो. चार पेक्षा जितक्या जास्त सॅटलाइट्सकडून सिग्नल मिळेल तितकी अचूकता अधिक. थोडक्यात काय तर जीपीएस उपग्रह आणि रीसीव्हर एकमेकांकडे ‘बऱ्याच कोनांतून’ बघत असतात आणि या बघणाऱ्या ‘नजरां’ची संख्या जितकी अधिक तितकी स्थान-वेळ-अचूकता जास्त.</p>
+
+      <p class="centered-marker">⌛⌛⌛</p>
+
+      <p>मानसिक स्वास्थ्याच्या प्रवासात introspectionचे अर्थात आत्मनिरीक्षणाचे अनन्यसाधारण महत्व आपण सगळेच जाणतो. आत्मनिरीक्षण म्हणजे आपले आपण आपल्याकडे, आपल्या वर्तणुकीकडे त्रयस्थ आणि तटस्थ नजरेने पाहणे. सॅटलाइट्स जसे कक्षेतून खाली पृथ्वीकडे कॅमेरे आणि सेन्सर्स रोखून ‘बघतात’ तसे आपल्याच मनाने भानावर राहून जाणीवपूर्वक स्वतःकडे निरखून बघणे!</p>
+
+      <p>हे आपले आपल्याकडे ‘बघणे’ भूस्थिर उपग्रह आणि त्याच्या ग्राउंड स्टेशन सारख्या एकच एक, त्याच त्या लिंकमधून न होता जीपीएस प्रणाली सारख्या बऱ्याच कक्षा आणि कोनांतून झाले तर त्याची म्हणजे introspectionची अचूकता वाढून ‘आपली आपल्याला आपल्याबद्दल’ येणारी clarity वाढेल असे म्हणणे अतिशयोक्त ठरू नये. जीपीएस वापरत वापरत ‘लोकेशन’वर पोहोचल्यावर देखील बऱ्याचदा शोधक नजरेने इकडे तिकडे बघत फोन करून नक्की कुठे? हे विचारावे लागते ना, तसेच काहीसे.</p>
+
+      <p class="centered-marker">⌛⌛⌛</p>
+
+      <p class="closing-note">गूगल मॅप वापरताना अचानक आलेली.. एक ‘अनुभूती’! @ २०२४११११</p>
     </div>
-  </header>
-
-  <!-- Notification Toast for Share Fallback -->
-  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full text-sm font-medium bg-slate-900/90 text-white dark:bg-slate-100 dark:text-slate-900 shadow-xl opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2">
-    दुवा कॉपी केला गेला आहे!
-  </div>
-
-  <main class="max-w-3xl mx-auto px-5 sm:px-8 py-8 sm:py-12">
-    
-    <!-- Animated Light Colorful SVG Graphic -->
-    <div class="w-full flex items-center justify-center mb-8 sm:mb-12">
-      <div class="w-full max-w-sm sm:max-w-md aspect-[400/280] rounded-3xl p-3 bg-gradient-to-b from-sky-50/70 via-indigo-50/40 to-transparent dark:from-slate-900/80 dark:via-indigo-950/20 dark:to-transparent border border-sky-100/60 dark:border-slate-800 shadow-sm flex items-center justify-center">
-        <svg viewBox="0 0 400 280" class="w-full h-full overflow-visible" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="जीपीएस आणि आत्मनिरीक्षण संकल्पना चित्र">
-          <defs>
-            <!-- Planet & Introspection Gradients -->
-            <linearGradient id="earthGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#38bdf8" />
-              <stop offset="50%" stop-color="#3b82f6" />
-              <stop offset="100%" stop-color="#6366f1" />
-            </linearGradient>
-
-            <linearGradient id="orbitGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.75" />
-              <stop offset="50%" stop-color="#fb923c" stop-opacity="0.4" />
-              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.8" />
-            </linearGradient>
-
-            <linearGradient id="orbitGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.8" />
-              <stop offset="50%" stop-color="#a855f7" stop-opacity="0.4" />
-              <stop offset="100%" stop-color="#ec4899" stop-opacity="0.8" />
-            </linearGradient>
-
-            <linearGradient id="orbitGrad3" x1="0%" y1="100%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#10b981" stop-opacity="0.8" />
-              <stop offset="100%" stop-color="#6366f1" stop-opacity="0.7" />
-            </linearGradient>
-
-            <linearGradient id="glowGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#e0e7ff" stop-opacity="0.6" />
-              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0" />
-            </linearGradient>
-
-            <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3.5" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-          </defs>
-
-          <!-- Introspective Ambient Glow -->
-          <circle cx="200" cy="140" r="95" fill="url(#glowGlow)" class="anim-beacon opacity-40 dark:opacity-25" />
-
-          <!-- Pulsing Waves (Consciousness / Radio Broadcasts) -->
-          <circle cx="200" cy="140" r="20" fill="none" stroke="#38bdf8" class="anim-wave-1" />
-          <circle cx="200" cy="140" r="20" fill="none" stroke="#818cf8" class="anim-wave-2" />
-          <circle cx="200" cy="140" r="20" fill="none" stroke="#f472b6" class="anim-wave-3" />
-
-          <!-- Geosynchronous Orbit (Circular / Wide) -->
-          <ellipse cx="200" cy="140" rx="160" ry="58" fill="none" stroke="currentColor" stroke-opacity="0.16" stroke-width="1.2" stroke-dasharray="3 3" />
-          
-          <!-- Orbit 1 with Satellite (MEO Angle 1) -->
-          <g class="anim-orbit-1">
-            <ellipse cx="200" cy="140" rx="135" ry="46" fill="none" stroke="url(#orbitGrad1)" stroke-width="1.8" />
-            <!-- Satellite 1 -->
-            <g transform="translate(335, 140)">
-              <!-- Solar Panels -->
-              <rect x="-14" y="-3.5" width="28" height="7" rx="1.5" fill="#38bdf8" fill-opacity="0.85" />
-              <rect x="-4" y="-5" width="8" height="10" rx="1.5" fill="#0284c7" />
-              <circle cx="0" cy="0" r="2.2" fill="#ffffff" />
-            </g>
-          </g>
-
-          <!-- Orbit 2 with Satellite (MEO Angle 2) -->
-          <g class="anim-orbit-2">
-            <ellipse cx="200" cy="140" rx="125" ry="40" fill="none" stroke="url(#orbitGrad2)" stroke-width="1.8" />
-            <!-- Satellite 2 -->
-            <g transform="translate(75, 140)">
-              <rect x="-13" y="-3" width="26" height="6" rx="1.5" fill="#ec4899" fill-opacity="0.9" />
-              <rect x="-3.5" y="-4.5" width="7" height="9" rx="1.5" fill="#be185d" />
-              <circle cx="0" cy="0" r="2" fill="#ffffff" />
-            </g>
-          </g>
-
-          <!-- Orbit 3 with Satellite (MEO Angle 3) -->
-          <g class="anim-orbit-3">
-            <ellipse cx="200" cy="140" rx="145" ry="44" fill="none" stroke="url(#orbitGrad3)" stroke-width="1.6" />
-            <!-- Satellite 3 -->
-            <g transform="translate(200, 96)">
-              <rect x="-12" y="-3" width="24" height="6" rx="1.5" fill="#10b981" fill-opacity="0.9" />
-              <rect x="-3" y="-4" width="6" height="8" rx="1.5" fill="#047857" />
-              <circle cx="0" cy="0" r="1.8" fill="#ffffff" />
-            </g>
-          </g>
-
-          <!-- Geosynchronous Fixed Satellite (Top position) -->
-          <g transform="translate(360, 140)">
-            <rect x="-14" y="-3.5" width="28" height="7" rx="1.5" fill="#f59e0b" />
-            <rect x="-4" y="-4.5" width="8" height="9" rx="1.5" fill="#d97706" />
-            <circle cx="0" cy="0" r="2" fill="#ffffff" />
-            <!-- Fixed beam toward center -->
-            <line x1="-5" y1="0" x2="-120" y2="0" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1.2" class="anim-signal-line" />
-          </g>
-
-          <!-- Multi-angle Introspection Perception Rays arriving at Central Mind/Observer -->
-          <line x1="290" y1="75" x2="216" y2="128" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.2" class="anim-signal-line" />
-          <line x1="110" y1="90" x2="184" y2="128" stroke="#ec4899" stroke-opacity="0.4" stroke-width="1.2" class="anim-signal-line" />
-          <line x1="200" y1="195" x2="200" y2="152" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.2" class="anim-signal-line" />
-
-          <!-- Centerpiece: Earth & The Clear Seeing Mind (Inner Eye / Perspective Beacon) -->
-          <g class="anim-centerpiece">
-            <!-- Central Globe / Self Core -->
-            <circle cx="200" cy="140" r="24" fill="url(#earthGrad)" filter="url(#softGlow)" />
-            
-            <!-- Longitude & Latitude delicate contours -->
-            <ellipse cx="200" cy="140" rx="10" ry="24" fill="none" stroke="#ffffff" stroke-opacity="0.3" stroke-width="0.8" />
-            <line x1="176" y1="140" x2="224" y2="140" stroke="#ffffff" stroke-opacity="0.3" stroke-width="0.8" />
-
-            <!-- The Introspection Iris / Awareness Motif -->
-            <circle cx="200" cy="140" r="8.5" fill="#ffffff" fill-opacity="0.95" />
-            <circle cx="200" cy="140" r="4.2" fill="#1e1b4b" />
-            <circle cx="201.5" cy="138.5" r="1.5" fill="#38bdf8" />
-          </g>
-
-          <!-- Compass Cardinal Marks (Reflecting inner orientation) -->
-          <circle cx="200" cy="94" r="1.8" fill="#38bdf8" />
-          <circle cx="200" cy="186" r="1.8" fill="#38bdf8" />
-          <circle cx="154" cy="140" r="1.8" fill="#38bdf8" />
-          <circle cx="246" cy="140" r="1.8" fill="#38bdf8" />
-        </svg>
-      </div>
-    </div>
-
-    <!-- Document Title (Centered) -->
-    <h1 class="text-center font-bold text-3xl sm:text-4xl lg:text-[42px] tracking-tight text-slate-900 dark:text-slate-50 mb-8 sm:mb-12 leading-snug">
-      जीपीएस आणि आत्मनिरीक्षण
-    </h1>
-
-    <!-- Article Body (Justified text, carefully formatted preserving original Marathi content) -->
-    <article class="space-y-6 text-base sm:text-lg text-slate-700 dark:text-slate-300 article-text font-normal">
-      <p>
-        आधुनिक जीवनात आपल्या सगळ्यांचा जीपीएस सुविधा आणि इतर उपग्रहीय दळणवळण (satellite communication) यांच्याशी नित्य संबंध येत असतो. पृथ्वीच्या कक्षेत कम्युनिकेशन सॅटलाइट्स नसतील तर टीव्ही लावून करायचे काय हा प्रश्न सर्वांनाच पडेल आणि नवीन पिढीला ‘लोकेशन’ आणि ‘जीपीएस’ नसेल तर अगदी शेजारच्या गल्लीतल्या घरापर्यंत ‘नॅव्हिगेट’ करणे देखील जमणार नाही अशी स्थिती आहे. पत्ता लिहिलेला कागद दाखवत विचारलेला “दादा/ताई, जरा हा पत्ता सांगता का?” हा प्रश्न जवळजवळ इतिहासजमा झाला आहे. असो.
-      </p>
-
-      <p>
-        कृत्रिम उपग्रह, त्यांच्या कक्षा आणि उपयोग विविध असले तरी तूर्तास आपण एका अर्थी ‘रोजच्या वापरातील’ उपग्रहांचा विचार करूया.
-      </p>
-
-      <p>
-        भूस्थिर कक्षेतील (Geosynchronous orbit) उपग्रह जे मुख्यत्वे सॅटेलाईट टीव्ही, विविध प्रकारचे दळणवळण आणि हवामानाचे अंदाज वर्तविण्यासाठी वापरले जातात आणि मध्यम कक्षेत फिरणारे (medium earth orbit) उपग्रह जे जीपीएस सुविधेसाठी वापरले जातात.
-      </p>
-
-      <p>
-        भूस्थिर उपग्रह विषुववृत्तापासून अंदाजे ३६००० किलोमीटर उंचीवर असलेल्या कक्षेत स्थापित केले जातात आणि त्यांचा पृथ्वीभोवती फिरण्याचा वेग अशा प्रकारे नियंत्रित केलेला असतो जेणेकरून ते पृथ्वीवर असलेल्या ‘ग्राउंड स्टेशन’ साठी ध्रुव ताऱ्याप्रमाणे आकाशात कायम एकाच जागी असल्याचे भासतात. त्यामुळे या उपग्रहाबरोबर संपर्क साधण्यासाठी म्हणून ‘ग्राउंड स्टेशन’ची अॅंटेना एकदा का फिक्स केली की काम फत्ते. थोडक्यात काय तर भूस्थिर उपग्रह आणि त्याची ग्राउंड स्टेशन्स एकमेकांकडे कायम ‘एकाच दृष्टिकोनातून’ पाहतात.
-      </p>
-
-      <p>
-        जीपीएस पद्धत यापेक्षा वेगळी आहे. Medium Earth Orbit मधे आपापल्या कक्षेत फिरणाऱ्या ३० पेक्षा जास्त उपग्रहांच्या एकत्रित प्रणालीचा (satellite constellation) यात वापर होतो. ढोबळ मानाने सांगायचे तर या constellation मधील प्रत्येक उपग्रह त्याची त्याच्या कक्षेतील स्थितीची तांत्रिक माहिती देणारा रेडियो संदेश सतत ट्रान्समिट करत असतो. आपल्या हातातील स्मार्टफोन, ‘स्मार्ट’ रिष्टवाच आणि इतर उपकरणात असलेला ‘जीपीएस रीसीव्हर’ अशा किमान चार उपग्रहांकडून मिळालेल्या संदेशांचे विश्लेषण करून भूतलावरची आपली नेमकी जागा (आणि वेळ देखील) अचूकपणे दाखवतो. चार पेक्षा जितक्या जास्त सॅटलाइट्सकडून सिग्नल मिळेल तितकी अचूकता अधिक. थोडक्यात काय तर जीपीएस उपग्रह आणि रीसीव्हर एकमेकांकडे ‘बऱ्याच कोनांतून’ बघत असतात आणि या बघणाऱ्या ‘नजरां’ची संख्या जितकी अधिक तितकी स्थान-वेळ-अचूकता जास्त.
-      </p>
-
-      <p>
-        मानसिक स्वास्थ्याच्या प्रवासात introspectionचे अर्थात आत्मनिरीक्षणाचे अनन्यसाधारण महत्व आपण सगळेच जाणतो. आत्मनिरीक्षण म्हणजे आपले आपण आपल्याकडे, आपल्या वर्तणुकीकडे त्रयस्थ आणि तटस्थ नजरेने पाहणे. सॅटलाइट्स जसे कक्षेतून खाली पृथ्वीकडे कॅमेरे आणि सेन्सर्स रोखून ‘बघतात’ तसे आपल्याच मनाने भानावर राहून जाणीवपूर्वक स्वतःकडे निरखून बघणे!
-      </p>
-
-      <p>
-        हे आपले आपल्याकडे ‘बघणे’ भूस्थिर उपग्रह आणि त्याच्या ग्राउंड स्टेशन सारख्या एकच एक, त्याच त्या लिंकमधून न होता जीपीएस प्रणाली सारख्या बऱ्याच कक्षा आणि कोनांतून झाले तर त्याची म्हणजे introspectionची अचूकता वाढून ‘आपली आपल्याला आपल्याबद्दल’ येणारी clarity वाढेल असे म्हणणे अतिशयोक्त ठरू नये. जीपीएस वापरत वापरत ‘लोकेशन’वर पोहोचल्यावर देखील बऱ्याचदा शोधक नजरेने इकडे तिकडे बघत फोन करून नक्की कुठे? हे विचारावे लागते ना, तसेच काहीसे.
-      </p>
-
-      <!-- Signature Line (Centered as in original document) -->
-      <div class="pt-8 sm:pt-12 pb-16 text-center">
-        <p class="text-sm sm:text-base text-slate-500 dark:text-slate-400 font-medium tracking-wide">
-          ~ गूगल मॅप वापरताना अचानक आलेली.. एक ‘अनुभूती’! @ २०२४११११
-        </p>
-      </div>
-    </article>
   </main>
 
   <script>
-    // Theme toggle handling
-    const htmlEl = document.documentElement;
-    const themeToggleBtn = document.getElementById('themeToggleBtn');
-    const sunIcon = document.getElementById('sunIcon');
-    const moonIcon = document.getElementById('moonIcon');
+    // Theme Switcher Logic
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
 
-    function updateIcons(isDark) {
-      if (isDark) {
-        sunIcon.classList.remove('hidden');
-        moonIcon.classList.add('hidden');
+    const sunPath = "M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0z";
+    const moonPath = "M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z";
+
+    function updateThemeUI(theme) {
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeIcon.innerHTML = '<path d="' + sunPath + '"/>';
+        themeLabel.textContent = 'Light Mode';
       } else {
-        sunIcon.classList.add('hidden');
-        moonIcon.classList.remove('hidden');
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeIcon.innerHTML = '<path d="' + moonPath + '"/>';
+        themeLabel.textContent = 'Dark Mode';
       }
     }
 
-    // Initialize theme based on preference or light by default
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      htmlEl.classList.add('dark');
-      updateIcons(true);
-    } else {
-      htmlEl.classList.remove('dark');
-      updateIcons(false);
-    }
-
-    themeToggleBtn.addEventListener('click', () => {
-      const isCurrentlyDark = htmlEl.classList.contains('dark');
-      if (isCurrentlyDark) {
-        htmlEl.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-        updateIcons(false);
-      } else {
-        htmlEl.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-        updateIcons(true);
-      }
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      updateThemeUI(newTheme);
     });
 
-    // Share functionality
+    // Native Web Share API with Clipboard Fallback
     const shareBtn = document.getElementById('shareBtn');
-    const toast = document.getElementById('toast');
-
-    function showToast(message) {
-      if (message) toast.textContent = message;
-      toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
-      toast.classList.add('opacity-100', 'translate-y-0');
-      setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
-      }, 2500);
-    }
-
     shareBtn.addEventListener('click', async () => {
       const shareData = {
-        title: 'जीपीएस आणि आत्मनिरीक्षण',
-        text: 'जीपीएस आणि आत्मनिरीक्षण - मानसिक स्वास्थ्य आणि तंत्रज्ञानाची एक सुंदर सांगड.',
+        title: document.title,
+        text: 'जीपीएस आणि आत्मनिरीक्षण - विचार करायला लावणारा लेख',
         url: window.location.href
       };
 
@@ -391,29 +369,23 @@
         try {
           await navigator.share(shareData);
         } catch (err) {
-          if (err.name !== 'AbortError') {
-            copyToClipboard();
-          }
+          // Sharing was canceled or failed silently
+        }
+      } else if (navigator.clipboard) {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          const originalText = shareBtn.querySelector('span').textContent;
+          shareBtn.querySelector('span').textContent = 'Copied!';
+          setTimeout(() => {
+            shareBtn.querySelector('span').textContent = originalText;
+          }, 2000);
+        } catch (err) {
+          alert('Link: ' + window.location.href);
         }
       } else {
-        copyToClipboard();
+        alert('Link: ' + window.location.href);
       }
     });
-
-    function copyToClipboard() {
-      const url = window.location.href;
-      const tempInput = document.createElement('input');
-      tempInput.value = url;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      try {
-        document.execCommand('copy');
-        showToast('दुवा कॉपी केला गेला आहे!');
-      } catch (err) {
-        showToast('लिंक कॉपी करता आली नाही');
-      }
-      document.body.removeChild(tempInput);
-    }
   </script>
 </body>
 </html>
