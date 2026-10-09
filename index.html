@@ -61,10 +61,10 @@
 
     .container {
       width: 100%;
-      max-width: 780px;
+      max-width: 800px;
       background-color: var(--card-bg);
       border-radius: 16px;
-      padding: 32px 36px;
+      padding: 32px 36px 40px 36px;
       box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
       position: relative;
@@ -74,7 +74,6 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: 12px;
       margin-bottom: 24px;
     }
 
@@ -86,8 +85,8 @@
       color: var(--button-text);
       border: 1px solid var(--border-color);
       border-radius: 9999px;
-      padding: 8px 16px;
-      font-size: 0.9rem;
+      padding: 9px 18px;
+      font-size: 0.95rem;
       font-weight: 500;
       font-family: inherit;
       cursor: pointer;
@@ -106,6 +105,12 @@
       fill: currentColor;
     }
 
+    .bottom-share-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 36px;
+    }
+
     .svg-banner {
       width: 100%;
       max-width: 520px;
@@ -115,35 +120,35 @@
     }
 
     .title {
-      font-size: 1.85rem;
+      font-size: 1.95rem;
       font-weight: 700;
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 32px;
       color: var(--accent-color);
       letter-spacing: -0.02em;
     }
 
     .content-body p {
-      font-size: 1.12rem;
-      line-height: 1.85;
+      font-size: 1.25rem;
+      line-height: 1.9;
       text-align: justify;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
       color: var(--text-color);
     }
 
     .centered-marker {
       text-align: center !important;
-      font-size: 1.4rem;
-      letter-spacing: 0.25em;
-      margin: 30px 0 !important;
+      font-size: 1.5rem;
+      letter-spacing: 0.3em;
+      margin: 32px 0 !important;
       user-select: none;
     }
 
     .closing-note {
       text-align: center !important;
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       color: var(--subtle-text);
-      margin-top: 28px;
+      margin-top: 32px;
       margin-bottom: 12px !important;
       font-weight: 500;
     }
@@ -153,14 +158,17 @@
         padding: 12px 8px;
       }
       .container {
-        padding: 24px 18px;
+        padding: 24px 18px 32px 18px;
       }
       .title {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
       }
       .content-body p {
-        font-size: 1.02rem;
-        line-height: 1.75;
+        font-size: 1.12rem;
+        line-height: 1.8;
+      }
+      .closing-note {
+        font-size: 1.05rem;
       }
     }
   </style>
@@ -175,26 +183,17 @@
         </svg>
         <span id="themeLabel">Dark Mode</span>
       </button>
-
-      <button id="shareBtn" class="btn" aria-label="Share">
-        <svg viewBox="0 0 24 24">
-          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
-        </svg>
-        <span>Share</span>
-      </button>
     </div>
 
     <!-- Animated Light Colorful SVG Graphic for "जीपीएस आणि आत्मनिरीक्षण" -->
     <svg class="svg-banner" viewBox="0 0 540 220" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- Earth Gradient -->
         <linearGradient id="earthGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#38bdf8"/>
           <stop offset="60%" stop-color="#3b82f6"/>
           <stop offset="100%" stop-color="#1d4ed8"/>
         </linearGradient>
 
-        <!-- Orbit Ring Gradient -->
         <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stop-color="#fb7185" stop-opacity="0.8"/>
           <stop offset="50%" stop-color="#a855f7" stop-opacity="0.7"/>
@@ -245,34 +244,25 @@
         }
       </style>
 
-      <!-- Range / Waves representing introspection & radar -->
       <circle class="radar-pulse" cx="270" cy="110" r="24" fill="none" stroke="#60a5fa" stroke-width="2" opacity="0.6"/>
       <circle class="radar-pulse-2" cx="270" cy="110" r="24" fill="none" stroke="#f472b6" stroke-width="1.8" opacity="0.6"/>
 
-      <!-- Orbit Path 1 -->
       <ellipse cx="270" cy="110" rx="180" ry="60" fill="none" stroke="url(#orbitGrad)" stroke-width="1.8" stroke-dasharray="6,4" opacity="0.75" transform="rotate(-15 270 110)" />
-      
-      <!-- Orbit Path 2 -->
       <ellipse cx="270" cy="110" rx="180" ry="60" fill="none" stroke="url(#orbitGrad)" stroke-width="1.8" stroke-dasharray="6,4" opacity="0.75" transform="rotate(25 270 110)" />
 
-      <!-- Center Earth / Mind -->
       <circle cx="270" cy="110" r="28" fill="url(#earthGrad)" filter="url(#glow)"/>
       <circle cx="270" cy="110" r="28" fill="none" stroke="#e0f2fe" stroke-width="2"/>
       
-      <!-- Eye / Mind Observation Icon on Earth -->
       <path d="M 258 110 Q 270 100 282 110 Q 270 120 258 110 Z" fill="none" stroke="#ffffff" stroke-width="1.6"/>
       <circle cx="270" cy="110" r="3.2" fill="#ffffff"/>
 
-      <!-- Rotating group 1 for Satellites -->
       <g class="orbit-rotation">
-        <!-- Satellite 1 -->
         <g transform="translate(100, 110)">
           <rect x="-8" y="-5" width="16" height="10" rx="2" fill="#38bdf8"/>
           <line x1="-15" y1="0" x2="-8" y2="0" stroke="#f59e0b" stroke-width="2"/>
           <line x1="8" y1="0" x2="15" y2="0" stroke="#f59e0b" stroke-width="2"/>
           <circle cx="0" cy="0" r="2" fill="#ffffff"/>
         </g>
-        <!-- Satellite 2 -->
         <g transform="translate(440, 110)">
           <rect x="-8" y="-5" width="16" height="10" rx="2" fill="#ec4899"/>
           <line x1="-15" y1="0" x2="-8" y2="0" stroke="#06b6d4" stroke-width="2"/>
@@ -281,16 +271,13 @@
         </g>
       </g>
 
-      <!-- Rotating group 2 (reverse) -->
       <g class="orbit-reverse">
-        <!-- Satellite 3 -->
         <g transform="translate(270, 40)">
           <rect x="-7" y="-5" width="14" height="10" rx="2" fill="#10b981"/>
           <line x1="-13" y1="0" x2="-7" y2="0" stroke="#f97316" stroke-width="2"/>
           <line x1="7" y1="0" x2="13" y2="0" stroke="#f97316" stroke-width="2"/>
           <circle cx="0" cy="0" r="2" fill="#ffffff"/>
         </g>
-        <!-- Satellite 4 -->
         <g transform="translate(270, 180)">
           <rect x="-7" y="-5" width="14" height="10" rx="2" fill="#f59e0b"/>
           <line x1="-13" y1="0" x2="-7" y2="0" stroke="#8b5cf6" stroke-width="2"/>
@@ -299,7 +286,6 @@
         </g>
       </g>
 
-      <!-- Converging Signal Beams to Center -->
       <line x1="100" y1="110" x2="270" y2="110" stroke="#38bdf8" stroke-width="1.2" opacity="0.4" class="signal-ray"/>
       <line x1="440" y1="110" x2="270" y2="110" stroke="#ec4899" stroke-width="1.2" opacity="0.4" class="signal-ray"/>
       <line x1="270" y1="40" x2="270" y2="110" stroke="#10b981" stroke-width="1.2" opacity="0.4" class="signal-ray"/>
@@ -325,12 +311,20 @@
 
       <p class="centered-marker">⌛⌛⌛</p>
 
-      <p class="closing-note">गूगल मॅप वापरताना अचानक आलेली.. एक ‘अनुभूती’! @ २०२४११११</p>
+      <p class="closing-note">गूगल मॅप वापरताना अचानक आलेली एक ‘अनुभूती' @ २०२४११११</p>
+    </div>
+
+    <div class="bottom-share-container">
+      <button id="shareBtn" class="btn" aria-label="Share">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+        </svg>
+        <span>Share</span>
+      </button>
     </div>
   </main>
 
   <script>
-    // Theme Switcher Logic
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = document.getElementById('themeIcon');
     const themeLabel = document.getElementById('themeLabel');
@@ -356,21 +350,18 @@
       updateThemeUI(newTheme);
     });
 
-    // Native Web Share API with Clipboard Fallback
     const shareBtn = document.getElementById('shareBtn');
     shareBtn.addEventListener('click', async () => {
       const shareData = {
         title: document.title,
-        text: 'जीपीएस आणि आत्मनिरीक्षण - विचार करायला लावणारा लेख',
+        text: 'जीपीएस आणि आत्मनिरीक्षण',
         url: window.location.href
       };
 
       if (navigator.share) {
         try {
           await navigator.share(shareData);
-        } catch (err) {
-          // Sharing was canceled or failed silently
-        }
+        } catch (err) {}
       } else if (navigator.clipboard) {
         try {
           await navigator.clipboard.writeText(window.location.href);
